@@ -1,0 +1,33 @@
+\chapter{Conclusions}\label{ch:conclusions}
+In this thesis, we extracted the vast wealth of knowledge online and made it accessible through a causal graph.
+We built a system that scrapes the web from several resources, formalizes the knowledge with \ac{NLP}, extracts \ac{CEP}, and constructs an extensive causal graph for the \ac{UAV} domain.
+The methods and technologies we used for \ac{CEP} extraction are extendable, allowing others to contribute to the project efficiently and adaptable, allowing us to apply the procedure for other domains.
+Many relations in our graph consist of problems and crashes of a \ac{UAV} helping to find root causes of these failures more efficiently.
+In addition, with the significant consistency in our results, we built a causal graph that helps to resolve and backtrack an innumerable number of problems regarding \ac{UAV}s.
+
+
+\section{Limitations}\label{sec:limitations}
+
+Our system can build a causal graph.
+However, there are still some limitations due to the time constraint of the thesis.
+The current web scraping implementation for the discussion forum uses only one node at the Selenium Grid.
+The \ac{CEP} extraction algorithm currently consists only of three patterns.
+Therefore, some pairs might be left out.
+Another problem is that we cannot retrace \ac{CEP}s across sentences or even posts.
+Furthermore, due to using only explicitly mentioned \ac{CEP}s, we might miss potentially knowledge from the users.
+To build the causal graph, we used a dictionary of synonyms as a generalization step, which is promising.
+However, we do not merge similar nodes, e.g., \qq{crash} and \qq{big crash}, which would lead to a more dense and compact graph.
+Also, the Ardupilot dataset which we provide consists of only 69 sentences.
+
+
+\section{Future Work}\label{sec:future-work}
+
+In this last section, we suggest future work possibilities to optimize our procedure further.
+To improve the data collection module, we could apply a more general scraping technique based on web crawlers that gather data from unseen domains.
+We could then transfer the pipeline to other domains that could benefit from a causal graph, such as medical or financial domains.
+We could replace the pre-trained model based on word embeddings with a transformer-based model, which we train on the whole corpus of sentences.
+This could lead to more accurate dependencies between tokens, improving the results for our dependency patterns.
+As we mentioned in \autoref{ch:related-work} several machine learning solutions are promising to extract \ac{CEP}s.
+We could extend the Ardupilot dataset and use it for a machine learning approach that requires such a labeled dataset to improve the results.
+The last suggestion would be to improve the visualization tool that allows only to discover the causal graph by looking at the nodes.
+One potential improvement could be to use an advanced text similarity measurement to find \ac{CEP}s of interests.

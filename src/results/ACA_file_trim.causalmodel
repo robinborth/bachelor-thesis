@@ -1,0 +1,56 @@
+{
+ "endos": [
+  {
+   "formula": "Exo_autotune",
+   "name": "autotune"
+  },
+  {
+   "formula": "autotune",
+   "name": "pids"
+  },
+  {
+   "formula": "pids|yaw_reset|issue|vibration",
+   "name": "crash"
+  },
+  {
+   "formula": "Exo_yaw_reset",
+   "name": "yaw_reset"
+  },
+  {
+   "formula": "Exo_ekf",
+   "name": "ekf"
+  },
+  {
+   "formula": "ekf|rtl",
+   "name": "copter"
+  },
+  {
+   "formula": "copter|gps",
+   "name": "issue"
+  },
+  {
+   "formula": "copter",
+   "name": "vibration"
+  },
+  {
+   "formula": "Exo_gps",
+   "name": "gps"
+  },
+  {
+   "formula": "Exo_radio_failsafe",
+   "name": "radio_failsafe"
+  },
+  {
+   "formula": "radio_failsafe",
+   "name": "rtl"
+  }
+ ],
+ "exos": [
+  "Exo_autotune",
+  "Exo_yaw_reset",
+  "Exo_ekf",
+  "Exo_gps",
+  "Exo_radio_failsafe"
+ ],
+ "name": "data"
+}

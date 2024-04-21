@@ -1,0 +1,63 @@
+{
+ "endos": [
+  {
+   "formula": "Exo_autotune",
+   "name": "autotune"
+  },
+  {
+   "formula": "autotune",
+   "name": "problem"
+  },
+  {
+   "formula": "problem|copter|issue|message",
+   "name": "crash"
+  },
+  {
+   "formula": "Exo_ekf",
+   "name": "ekf"
+  },
+  {
+   "formula": "ekf",
+   "name": "copter"
+  },
+  {
+   "formula": "Exo_gps",
+   "name": "gps"
+  },
+  {
+   "formula": "gps|response|mode",
+   "name": "issue"
+  },
+  {
+   "formula": "gps",
+   "name": "message"
+  },
+  {
+   "formula": "Exo_motors",
+   "name": "motors"
+  },
+  {
+   "formula": "motors",
+   "name": "torque"
+  },
+  {
+   "formula": "torque",
+   "name": "roll"
+  },
+  {
+   "formula": "roll",
+   "name": "response"
+  },
+  {
+   "formula": "roll",
+   "name": "mode"
+  }
+ ],
+ "exos": [
+  "Exo_autotune",
+  "Exo_ekf",
+  "Exo_gps",
+  "Exo_motors"
+ ],
+ "name": "data"
+}

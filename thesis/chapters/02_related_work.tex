@@ -1,0 +1,197 @@
+\externaldocument{chapters/03_pipeline_overview}
+
+
+\chapter{Related Work}\label{ch:related-work}
+
+When a problem occurs with a \ac{UAV}, there are several ways to identify its cause: read the documentation, search
+through discussion forums or get advice from experts via Discord, for instance.
+These sources of information, created by several users, developers, or experts, provide a precious wealth of knowledge.
+However, the data is not easily accessible since it is scattered across several platforms.
+In addition, informal discussions are not validated and, therefore, not entirely reliable.
+Thus, our goal is to generate a causal graph where all causalities are gathered, processed, and validated to provide
+one reliable source of truth.
+
+
+\section{Web Scraping And Data Collection}\label{sec:web-scraping-and-data-collection}
+We gather the information by scraping the web.
+Recent progress in implementing knowledge-based systems was driven by the development of new learning algorithms and the ongoing explosion in the availability of online data \cite{jordan2015machine}.
+In many areas, web services and \ac{API}s are the standards for accessing structured data from the web \cite{glez2014web, hernandez2018web}.
+However, an API or web service might not exist or benefit a particular use case.
+Unfortunate, there is no such interface that gathers domain expert knowledge from the ArduPilot system.
+We want to fill that gap by using web scraping techniques to gather knowledge of the online documentation, discussion forum, and official Discord channel of ArduPilot.
+
+\subsection{Different Web Scraping Techniques}\label{subsec:different-web-scraping-techniques}
+Web scraping transforms the unstructured data from one or many websites into structured data, which can be stored and analyzed in a central local database.
+There exist many applications, from grey literature search \cite{haddaway2015use} to scraping hematologic patient's information during the SARS-CoV2 Pandemic \cite{melchor2020ct} to gather social media \cite{rajput2019big}  information.
+Because of the many application areas and target websites, there is also an increased need for different scraping techniques as online resources become available in different ways.
+In the following, we will look at the most common techniques \cite{sirisuriya2015comparative}.
+
+\subsubsection{Copy-Pasting}\label{subsubsec:copy-pasting}
+Occasionally the human’s manual examination and copy-pasting method may prove irreplaceable, especially when websites have barriers and machine automation cannot be easily applied.
+For example, the Italian National Institute of Statistics collected price information of products mainly manually, through the \qq{copy and paste} technique \cite{polidoro2015web}.
+However, this is an error-prone and tiresome technique when people scrap many datasets.
+
+\subsubsection{API Scraping}
+Many dynamic websites get their content by communicating with a web \ac{API} to a backend server or content management system \cite{wilkinson2018accessible}.
+To gather the information directly, we can skip the process that the webpage loads the content, process it, and finally display the information embedded in \ac{HTML} on the page.
+Instead, we can directly interact with the \ac{API} the website uses, which has two advantages: it is generally time-efficient, and the data we get is structured.
+However, such web \ac{API}s do not have to have the response format we require;
+the data can be split across multiple endpoints, protected via different restrictions, or is not directly available through a request.
+\ac{API} scraping describes the systematic way to gather all the needed data from an \ac{API} and combine it to one source.
+Unfortunately, access to these \ac{API}s is not always allowed, or we need to deal with restrictions.
+For example, Twitter is the preferred social network for data collection in the machine learning area \cite{sohail2021crawling, sembodo2016data}.
+They provide a free API, but without unlimited access, they use a rate limit to cap the max requests and use bot detection to prevent users from automatically scraping their content.
+Because there is such a vast interest in scraping that \ac{API}, there is a specific solution to bypass these restrictions for this specific \ac{API}.
+In general, we can use less detectable scraping techniques \cite{farholt2021less} to overcome some limitations, but we need to adjust it to the specific use case.
+
+\subsubsection{Web Data Scraper}
+Web Data Scraper is probably the most practical technique for extracting data from web pages.
+A web data scraper mainly performs the following three tasks: accessing the website, \ac{HTML} parsing and extracting the content, and creating the output \cite{glez2014web}.
+However, this approach is limited to a well-defined number of web pages, exactly the number defined as the input to the scraper \cite{vanden2018practical}.
+The already existing approach can be extended with the \label{04-crawling} automatic crawling of a new \ac{URL}s for scraping many data from different pages or even different websites \cite{mitchell2018web}.
+As the difference between \textit{web scraping} and \textit{web crawling} is relatively vague, we will use both terms interchangeably \cite{vanden2018practical}.
+There are three main approaches to implementing a web data scraper \cite{glez2014web}: build own web data scraper with libraries, utilize existing frameworks, or use desktop-based software.
+\begin{description}
+    \item[\textit{Libraries}]\label{itm:libraries} The first approach is to construct a web data scraper using different general\-purpose libraries.
+    Building a web data scraper is widely used in bioinformatics \cite{glez2014web}, as it is often a quick way to obtain data.
+    Another scenario is when there are specific requirements for individual components.
+    For example, dynamic web pages may require javascript to be executed to extract content.
+    The library Selenium \footnote{\url{https://selenium-python.readthedocs.io/}} developed originally for website testing solves this problem by providing an \ac{API} to a web driver to execute javascript \cite{mitchell2018web}.
+    There are several software architectures for implementing such a web data scraper.
+    In \cite{mitchell2018web}, a general web crawling model was presented, allowing the replacing of individual components with a preferred library.
+    In \cite{mahto2016dive}, the author answers ethics and legal issues during web scraping.
+    Building a web data scraper is often unnecessary since scraping frameworks can take over the most critical tasks \cite{mitchell2018web}.
+    \item[\textit{Frameworks}]\label{itm:frameworks} Creating a web scraper with libraries has disadvantages and is often unnecessary.
+    Several libraries need to be integrated for web access and others for parsing and extracting content from \ac{HTML} documents.
+    Furthermore, these scrapers are more affected by changes in the \ac{HTML}, which requires continuous maintenance in the system's design.
+    Scraping frameworks provide a more integrative solution by hiding the various components under a unified \ac{API}.
+    For example, Scrapy\footnote{\url{https://scrapy.org/}} is a web scraping framework for python that has many applications, especially in big data \cite{chaulagain2017cloud, landers2016primer}.
+    \item[\textit{Software}]\label{itm:software} There are also several desktop-based software that solves web scraping.
+    Often the software has an integrated browser that allows the user to select the individual web pages and elements interactively.
+    The use of such software does not require any programming knowledge or other technical background.
+    In addition, the software provides modules for different types of outputs such as CSV files or insertions into a database.
+    An application example is the search of grey literature \cite{haddaway2015use} with the help of the software FMiner\footnote{\url{https://www.fminer.com/}}.
+    The main disadvantage of these desktop solutions is the commercial distribution and limited \ac{API} access, which makes it challenging to integrate this type of scraper into a program \cite{glez2014web}.
+\end{description}
+
+\subsubsection{Others}
+For completeness, there are many other techniques to scrape data, such as computer vision webpage analyzers, text grabbing with regular expression, vertical aggregation platforms, and even more \cite{sirisuriya2015comparative}.
+
+
+\subsection{Evaluate Techniques And Show Limitations}\label{subsec:evaluation-of-the-correct-technique}
+In the previous section, we analyzed different techniques for scraping data.
+However, since the discussion forum, documentation, and Discord chat are fundamentally different, we considered them separately.
+Therefore, in the following, we will (1) analyze each website based on the accessibility, (2) choose the proper technique based on our evaluation, and (3) describe the gaps that we need to fill to translate the already existing solutions to our specific websites.
+\begin{description}
+    \item[\textit{Forum}] (1) The forum is a highly dynamic website that requires much javascript interaction.
+    (2) Therefore, we will follow the method of \cite{mitchell2018web} to build a web scraper, whose core is the Selenium library that can handle Javascript.
+    A similar approach has also been taken by \cite{manjari2020extractive} to build a text summary from web pages using Selenium or \cite{han2021web} to study customer behavior on online travel and hospitality services.
+    The existing solutions with Selenium focus mainly on the technical part of extracting the content.
+    However, in practice, the handling of Selenium can also cause some difficulties, e.g., the web driver connection breaks during scraping.
+    (3) This paper will present a robust way to use Selenium for the ArduPilot forum.
+    Furthermore, we optimize the method of \cite{mitchell2018web} to speed up the scraping for our domain.
+    \item[\textit{Documentation}] (1) The documentation is a static website where the individual pages are fully and logically linked.
+    (2) Therefore, we will follow the method of \cite{kouzis2016learning} to implement a basic spider with the framework Scrapy.
+    (3) In this thesis, we will analyze the \ac{HTML} structure of the documentation to provide the needed parameter to run the spider on our domain.
+    \item[\textit{Discord}] (1) The Discord channel is a highly dynamic website that provides a developer \ac{API}.
+    (2) Therefore, we do not need to use a web data scraper and scrape the provided \ac{API} directly.
+    (3) In this thesis, we will show an efficient and minimal approach to extracting the messages from the different topics in the official Discord channel of ArduPilot and how to overcome the limitations of the \ac{API}.
+\end{description}
+
+\subsection{Cleaning The Data}\label{subsec:cleaning-the-data}
+After extracting the data from the different sources, we faced the problem of poorly formatted data, which can happen because of errant punctuation, inconsistent capitalization, line breaks, and misspellings of the users or developers.
+There are two approaches to dealing with poorly formatted data: we can either drop the data or clean it.
+In \cite{mitchell2018web}, they provided a methodology to extract n-grams from poorly formatted data and different techniques to clean the text with regular expressions.
+We replaced the n-gram algorithm with a sentence segmentation algorithm to preserve the sentence structure.
+Additionally, we also added grammar rules to filter incorrect sentences.
+
+
+\section{Extracting Cause-Effect Pairs}\label{sec:extracting-cause-effect-pairs}
+We process the domain expert knowledge by finding \ac{CEP}s.
+The extraction of cause-effect relationships has been extensively studied in \ac{NLP}.
+In the literature, we can distinguish between two main approaches that address this task:
+rule based methods (see \autoref{subsec:static-pattern-finding}) and machine learning based methods (see \autoref{subsec:machine-learning-techniques}) \cite{guo2020survey, asghar2016automatic}.
+
+\subsection{Rule Based Methods}\label{subsec:static-pattern-finding}
+Small text, manual annotation, hand-coded features, and domain dependency were the first attempts to extract \ac{CEP}s.
+One of the first successes was achieved by Kaplan and Berry-Rogghe in 1991 \cite{kaplan1991knowledge}.
+They developed a causal analyzer that uses 20 hand-coded explicit propositional clues to tag causality like \qq{because}, \qq{due to} and \qq{when}.
+This approach had the limitations that extensive manual pre-processing and domain-specific expert knowledge was required to design this handful of clues.
+In the investigation for domain independence, Christopher Khoo made a series of publications between 1998 and 2000 \cite{khoo1998automatic, khoo1999method, khoo2000extracting}.
+They have circumvented domain-dependency by relying on the linguistic clues of causal links, 2082 causative verbs, patterns of Verb-NounPhrase-Adjective and if-then conditionals.
+The primary limitation of Khoo's work was that he used only explicit causal indicators and the lack of inference from a knowledge base.
+Girju and Moldovan \cite{girju2002text} presented an essential work for domain-independent CEP extraction.
+They overcame previous attempts which rely solely on manually generated linguistic patterns by creating an algorithm that uses a semi-supervised approach to validate and obtain a list of automatically discovered linguistic patterns.
+Their work focused only on explicit syntactic patterns of the form NounPhrase-CausativeVerb-NounPhrase.
+They also provided a list of such causative verbs, based on ambiguity and frequency, used in many applications to find sentences that could include causation.
+Pre-trained models for \ac{NLP} could be used to obtain syntactic information from text, such as dependencies between tokens.
+We can use the resulting dependency tree to find \ac{CEP} by pre-defined dependency patterns, often called Semgrex\footnote{\url{https://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/semgraph/semgrex/SemgrexPattern.html}} patterns.
+Utilizing Semgrex patterns has the advantage of being domain-independent, allowing quick adaption to new patterns, and requiring no labeled training data.
+In \cite{doan2019extracting}, the authors extracted health-related \ac{CEP}s from Twitter messages using CoreNLP\footnote{\url{https://stanfordnlp.github.io/CoreNLP/}} and dependency patterns, similar to our approach.
+To extract the \ac{CEP}s, the authors created a set of causal trigger words consisting of seven verbs and three nouns such as \qq{causes}, \qq{trigger} or \qq{generate}.
+Based on these causal triggers, the authors created the following dependency patterns:
+(1) Trigger verb (active): \qq{Stress caused insomnia.}
+(2) Trigger verb (phrasal, active): \qq{Stress results in insomnia.}, which extends the active pattern with a preposition.
+(3) Trigger verb (passive): \qq{Stress was caused by insomnia.}, which uses the past participle form of a trigger verb.
+The authors achieved a precision between \qq{74.59}\% to \qq{92.27}\%.
+In \cite{sorgente2013automatic}, the authors used optimized dependency patterns to extract \ac{CEP}s from the SemEval-2010 Task 8 dataset.
+They also provided different conjunction rules to extract multiple \ac{CEP}s.
+With their approach, the authors where able to extract three \ac{CEP}s from the sentence \qq{Heat, wind and smoke cause flight delays.}: \qq{heat} => \qq{delays}, \qq{wind} => \qq{delays} and \qq{smoke} => \qq{delays}.
+The \ac{CEP}s from the previous papers \cite{doan2019extracting, sorgente2013automatic} consist only of single words like \qq{stress} => \qq{insomnia} or \qq{heat} => \qq{delays}.
+Thus, these papers were only able to extract general \ac{CEP}s.
+
+
+\subsection{Machine Learning Techniques}\label{subsec:machine-learning-techniques}
+The need to use a large amount of labeled, domain-and-type-independent textual data and automatically extract implicit patterns lead to the idea that machine learning techniques could potentially do much better than purely linguistic techniques \cite{asghar2016automatic}.
+One of the first approaches was a modification of \cite{girju2002text} by Girju, and Modovan.
+The authors replaced their semi-supervised pattern validation and ranking procedure with a supervised method using a C4.5 decision tree \cite{girju2003automatic}.
+Their training corpus includes 6000 sentences, where they found 6523 relations of the form NounPhrase-Verb-NounPhrase, 2101 of them were causal relations, 4422 not.
+With these positive and negative labeled relations, they trained their decision-tree classifier.
+The model obtained a precision and recall of \qq{73.91}\% and \qq{88.69}\%, respectively, on the test set.
+The major contributing factor which led to errors was the restricted list of 60 causative verbs and the small dataset.
+One way to solve the problem of requiring a large labeled dataset for supervised machine learning was to learn cue phrase and lexical pair probabilities from a raw and domain-independent corpus in an unsupervised manner.
+The researchers \cite{marcu2002unsupervised, chang2004causal} used these cues to extract ternary expressions of inter-noun and inter-sentence causality expressions.
+After ranking and filtering the ternaries, they trained a Naive Bayes classifier which used them as features.
+In \cite{sharp2016creating}, the authors extracted \ac{CEP}s using a combination of dependency patterns and machine learning techniques.
+Such a \ac{CEP} consists of several words, e.g., \qq{defect battery} => \qq{big crash}.
+First, they use dependency patterns to identify potential participants in causal relations, named causal mentions.
+These causal mentions are either noun phrases or clauses, consisting of either a noun or verb root token.
+Next, they followed outgoing dependency links from this root token for modifiers and attached prepositional phrases to a maximum depth of two links.
+The authors used these phrases to train their machine learning models with them.
+IBM research tried to answer binary causal questions through large-scale text mining \cite{Hassanzadeh19}.
+They used different benchmark datasets for causal extraction methods, e.g., SemEval or \ac{NATO-SFA}, to verify their solutions.
+They introduced a Discourse-Cue-Based-Embed method where they first filter the sentences, which includes explicit causal verbs, based on the causal verb list with low ambiguity from Girju and Moldovan\cite{girju2002text}.
+Then they extract \ac{CEP}s based on the approach from Sharp \cite{sharp2016creating}.
+The researchers also introduced a new technique to capture various ways a \ac{CEP} can be represented in natural language.
+They trained a neural network on their corpus to build a synonym dictionary that performs semantic mapping of tokens in a phrase.
+The authors in \cite{rink2010learning} created a novel graphical framework to handle implicit causal relations, which can capture the lexical and syntactic structure of a sentence as a graph.
+They use pattern matching within the graph and linguistic features between verbs to train an SVM classifier over the Google N-gram corpus.
+The graph method captured relations between features and achieved and precision and recall score of \qq{0.89} on the SemEval 2010 Task 8 dataset.
+The previous machine learning techniques can only extract a single \ac{CEP} from a sentence
+The deconfounder combines unsupervised machine learning and predictive model checking to perform causal inference in multiple cause-effect settings \cite{wang2019blessings}.
+They also showed that their algorithm requires weaker assumptions than classical causal inference.
+A recent approach from \cite{pawar2021knowledge} used a combination of an unsupervised machine learning technique to discover causal triggers and a set of high-precision linguistic rules to identify \ac{CEP}s.
+They used a dataset with 568,528 sentences and found 152,655 cause-effect triples, where each triple consists of a cause phrase, an effect phrase, and a causal trigger.
+They also provided a detailed evaluation method to measure \ac{CEP}s consisting of phrases.
+However, they did not provide a method to measure the performance for multiple cause-effect scenarios.
+
+\subsection{Evaluate Techniques}\label{subsec:scope-of-the-thesis}
+Although the performance measures of the machine learning approaches are high compared to the rule-based methods, these models require a large amount of labeled data for training.
+We decided to use a pre-trained \ac{NLP} model\footnote{\url{https://spacy.io/models/en\#en_core_web_lg}} and dependency patterns similar to \cite{doan2019extracting, sorgente2013automatic}, to extract \ac{CEP}s.
+These papers were only able to extract general \ac{CEP}s such as \qq{stress} => \qq{insomnia}.
+We want to create a causal graph that is capable of providing insights.
+Thus, we want to use the phrase expansion method from \cite{sharp2016creating} and the conjunction rules \cite{sorgente2013automatic} as a baseline to provide a novel phrase extraction algorithm capable of finding multiple \ac{CEP}s.
+By utilizing the results from previous papers, we want to build a flexible and robust system that does not require a new model to be trained when target domains are changed.
+
+
+\section{Causal Graphs}\label{sec:causal-graphs}
+We accumulated the \ac{CEP}s into a \ac{WDCG} that representing the domain expert knowledge from the ArduPilot community.
+Causation plays an essential role for many data-intensive systems, especially to better understand and learn from these systems.
+Robotics is one of the essential areas of causation research, as these systems typically act directly with the environment and interact with humans.
+Especially when such systems have errors, it is essential to understand the causes that led to them.
+In \cite{hellstrom2021relevance}, the authors have investigated the role of causal reasoning, mainly at the sense-plan-act level of robotics and several higher-level aspects such as understandability and machine ethics.
+The researchers from \cite{stocking2022robot} used causal graphical models to represent causal relations in robotics, as these structures can efficiently and explicitly reason about novel situations and probable outcomes of decisions.
+In \cite{ibrahim2019practical}, they used the case study of \ac{UAV}s to combine different types of models into one holistic Halpern-Pearl causal model in a semi-automatic process.
+They used that graph to detect and explain unwanted events like "GPS fault" or "Loss of Control" of a \ac{UAV} system.
+Our thesis aims to automate the process of building such a causal graph.
+We build it by first generalizing the pairs using a synonym dictionary similar to \cite{Hassanzadeh19} and then accumulating the \ac{CEP}s into one holistic \ac{WDCG}.

@@ -1,0 +1,18 @@
+
+    02 Source
+    Total sentences: 935026
+    Blog sentences: 765171
+    Docs sentences: 69490
+    Discord sentences: 100365
+
+    03 Prefiltered
+    Total sentences: 39754
+    Blog sentences: 32817
+    Docs sentences: 3835
+    Discord sentences: 3102
+
+    04 Cause-Effect-Pairs
+    Total sentences: 2237
+    Blog sentences: 1781
+    Docs sentences: 308
+    Discord sentences: 148

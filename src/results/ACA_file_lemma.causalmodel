@@ -1,0 +1,73 @@
+{
+ "endos": [
+  {
+   "formula": "Exo_autotune",
+   "name": "autotune"
+  },
+  {
+   "formula": "autotune",
+   "name": "high_value"
+  },
+  {
+   "formula": "high_value",
+   "name": "vehicle"
+  },
+  {
+   "formula": "vehicle",
+   "name": "position"
+  },
+  {
+   "formula": "position|copter|gps",
+   "name": "issue"
+  },
+  {
+   "formula": "issue|vibration|yaw_reset",
+   "name": "crash"
+  },
+  {
+   "formula": "Exo_battery_failsafe",
+   "name": "battery_failsafe"
+  },
+  {
+   "formula": "battery_failsafe|radio_failsafe",
+   "name": "rtl"
+  },
+  {
+   "formula": "rtl",
+   "name": "motor"
+  },
+  {
+   "formula": "motor|copter",
+   "name": "vibration"
+  },
+  {
+   "formula": "rtl|ekf",
+   "name": "copter"
+  },
+  {
+   "formula": "Exo_yaw_reset",
+   "name": "yaw_reset"
+  },
+  {
+   "formula": "Exo_ekf",
+   "name": "ekf"
+  },
+  {
+   "formula": "Exo_gps",
+   "name": "gps"
+  },
+  {
+   "formula": "Exo_radio_failsafe",
+   "name": "radio_failsafe"
+  }
+ ],
+ "exos": [
+  "Exo_autotune",
+  "Exo_battery_failsafe",
+  "Exo_yaw_reset",
+  "Exo_ekf",
+  "Exo_gps",
+  "Exo_radio_failsafe"
+ ],
+ "name": "data"
+}

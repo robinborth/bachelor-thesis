@@ -1,0 +1,57 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+
+\documentclass[headsepline,footsepline,footinclude=false,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,BCOR=12mm,DIV=12]{scrbook} % two-sided
+%\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc]{scrbook}
+
+
+\input{settings}
+
+\newcommand*{\getUniversity}{Technical University of Munich}
+\newcommand*{\getFaculty}{Software and Systems Engineering}
+\newcommand*{\getTitle}{Scraping online documentation of Ardupilot UAV system to generate a knowledge-based causal graph}
+\newcommand*{\getTitleGer}{Scraping der Online-Dokumentation des Ardupilot-Drohnensystems zur Generierung eines wissensbasierten Kausalgraphen.}
+\newcommand*{\getAuthor}{Robin Borth}
+\newcommand*{\getDoctype}{Bachelor's Thesis in Informatics}
+\newcommand*{\getSupervisor}{Prof. Dr. Alexander Pretschner}
+\newcommand*{\getAdvisor}{Ehsan Zibaei}
+\newcommand*{\getSubmissionDate}{15.02.2022}
+\newcommand*{\getSubmissionLocation}{Munich}
+
+\begin{document}
+
+    \pagenumbering{alph}
+    \input{pages/cover}
+
+    \frontmatter{}
+
+    \input{pages/title}
+    \input{pages/disclaimer}
+    \input{pages/acknowledgments}
+    \input{pages/abstract}
+    \microtypesetup{protrusion=false}
+    \tableofcontents{}
+    \microtypesetup{protrusion=true}
+
+    \mainmatter{}
+
+    \input{chapters/01_introduction.tex}
+    \input{chapters/02_related_work.tex}
+    \input{chapters/03_pipeline_overview}
+    \input{chapters/04_data_collection}
+    \input{chapters/05_cause_effect_extraction.tex}
+    \input{chapters/06_causal_graph}
+    \input{chapters/07_evaluation_methods}
+    \input{chapters/08_results.tex}
+    \input{chapters/09_conclusions.tex}
+
+    \appendix{}
+
+    \microtypesetup{protrusion=false}
+    \input{pages/abbreviations.tex}
+    \listoffigures{}
+    \listoftables{}
+    \microtypesetup{protrusion=true}
+    \printbibliography{}
+%    \bibliography{bibliography}
+
+\end{document}

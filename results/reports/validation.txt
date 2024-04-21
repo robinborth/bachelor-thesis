@@ -1,0 +1,12 @@
+
+    Validation Dataset by Robin Borth:
+    Total sentences: 539
+    None pairs: 264
+    Single pair: 197
+    Multiple pairs: 78
+
+    Validation Dataset by Ehsan Zibaei:
+    Total sentences: 539
+    None pairs: 246
+    Single pair: 235
+    Multiple pairs: 58

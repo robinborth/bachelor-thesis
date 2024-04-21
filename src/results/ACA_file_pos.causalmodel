@@ -1,0 +1,74 @@
+{
+ "endos": [
+  {
+   "formula": "Exo_loiter",
+   "name": "loiter"
+  },
+  {
+   "formula": "loiter|pid",
+   "name": "vibration"
+  },
+  {
+   "formula": "vibration|problem|copter|yaw_reset|issue",
+   "name": "crash"
+  },
+  {
+   "formula": "Exo_autotune",
+   "name": "autotune"
+  },
+  {
+   "formula": "autotune",
+   "name": "pid"
+  },
+  {
+   "formula": "pid|battery",
+   "name": "problem"
+  },
+  {
+   "formula": "Exo_battery_failsafe",
+   "name": "battery_failsafe"
+  },
+  {
+   "formula": "battery_failsafe",
+   "name": "battery"
+  },
+  {
+   "formula": "battery_failsafe|radio_failsafe",
+   "name": "rtl"
+  },
+  {
+   "formula": "rtl|ekf",
+   "name": "copter"
+  },
+  {
+   "formula": "Exo_yaw_reset",
+   "name": "yaw_reset"
+  },
+  {
+   "formula": "Exo_ekf",
+   "name": "ekf"
+  },
+  {
+   "formula": "Exo_gps",
+   "name": "gps"
+  },
+  {
+   "formula": "gps",
+   "name": "issue"
+  },
+  {
+   "formula": "Exo_radio_failsafe",
+   "name": "radio_failsafe"
+  }
+ ],
+ "exos": [
+  "Exo_loiter",
+  "Exo_autotune",
+  "Exo_battery_failsafe",
+  "Exo_yaw_reset",
+  "Exo_ekf",
+  "Exo_gps",
+  "Exo_radio_failsafe"
+ ],
+ "name": "data"
+}

@@ -1,0 +1,5 @@
+       name  nodes  edges  nodes_with_one_path_to_crash  total_distinct_paths_to_crash
+0  baseline   3558   2503                           806                           1058
+1     lemma   3376   2490                          1000                           1348
+2       pos   2747   2420                          1403                           2089
+3      root   1271   1953                          1048                           2441

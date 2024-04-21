@@ -1,0 +1,14 @@
+\chapter{\abstractname}
+
+When a \ac{UAV} crash, it is difficult to identify the root cause of the failure.
+If we cannot identify the cause, we cannot fix the issue and, therefore, not prevent it in the future.
+With semi-automatic procedures, experts manually create causal graphs to trace back the events that led to the final failure.
+As it is not fully automized yet, these graphs are strongly limited in their knowledge scope and sometimes not detailed enough.
+However, several sources provide a substantially wealthier knowledge base, such as online documentation and forums.
+Here we build an automized pipeline that can extract the information from those resources and construct an extensive causal graph.
+First, we scraped the web to gather \ac{UAV} expert knowledge by utilizing different techniques.
+We then processed the information with a pre-trained \ac{NLP} model.
+Next, by applying dependency patterns on the pre-processed data, we extracted \ac{CEP}s.
+Finally, we merged pairs with identical meanings using a synonym dictionary generated from the corpus to build the causal graph.
+With this automatized approach, we built a causal graph consisting of 3941 nodes, able to resolve issues with \ac{UAV}s efficiently.
+We anticipate this thesis to be the starting point for extending our procedure to a robust and sophisticated tool or even applying it in other domains to make use of the enormous wealth of knowledge online.

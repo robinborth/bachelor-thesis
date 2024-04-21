@@ -1,0 +1,102 @@
+\chapter{Introduction}\label{ch:introduction}
+
+
+\section{Motivation}\label{sec:motivation}
+A \ac{UAV} is a cyber-physical system.
+In contrast to classical systems, the faults in cyber-physical systems are often caused by their interaction with their physical environment and the social context.
+Thus, when \ac{UAV}s crash, it is difficult to identify the root cause of the failure.
+If we cannot identify the cause, we cannot fix the issue and, therefore, not prevent it in the future.
+Experts manually create causal graphs with semi-automatic procedures \cite{ibrahim2019practical} to trace back the events that led to the final failure.
+Nevertheless, its formation costs a lot of time and effort, as it is not fully automized yet.
+Therefore, these graphs are strongly limited in their knowledge scope and sometimes not detailed enough.
+However, several sources provide a substantially wealthier knowledge base, such as online documentation and forums.
+For instance, ArduPilot\footnote{https://ardupilot.org/} is an open/source autopilot system that provides comprehensive online documentation and has an active community of experienced users and developers.
+If we could use all that valuable information at hand and create an automatic causal graph, we would have a powerful tool to resolve innumerable issues with \ac{UAV}s efficiently.
+To build such a graph, we would have to collect cause/effect pairs informally reported by users and experts online in natural language.
+For example, an experienced user argues that \qq{a \ac{GPS} fault causes a crash} in a forum post.
+Such information can be encoded as a pair of graph nodes with a direct edge between them, with \qq{GPS fault} as the cause and \qq{crash} as the effect.
+
+
+\section{Problem And Research Questions}\label{sec:problem}
+As mentioned above, domain experts create causal graphs that allow backtracking from effects to their causes.
+However, if we automized this creation procedure and utilized the knowledge online, we could create an enhanced graph that is more powerful and rich in knowledge.
+Frameworks allow building causal graphs given the \ac{CEP}s.
+Therefore, our main task is to extract those pairs.
+Yet, there are several problems
+\begin{enumerate}
+    \item The knowledge is scattered across several online platforms.
+    \item The \ac{CEP}s are embedded in natural language, hindering us from extracting them directly.
+    \item The same information may be expressed differently, e.g., with synonyms, leading to imprecision in our graph.
+\end{enumerate}
+Some methods exist to resolve these issues, for instance, web scraping to scrape all information sources or \ac{NLP} to extract formal information from natural language.
+However, there is no procedure combining these methods and adapting them for our specific domain to build an extensive causal graph.
+In this thesis, we want to fill that gap.
+
+Furthermore, we want to gain insight into the resulting causal graph and validate our graph against the already-available sanitized dataset of \ac{UAV} flight logs.
+In particular, we aim to answer the following research questions:
+\begin{enumerate}
+    \item How diverse are the mentioned cause and effect events in the online resources?
+    \item How consistent are the causal relationships in the online resources?
+    \item How detectable are such cause and effect events in the data set?
+    \item How accurate are the mentioned causal relationships considering the historical data?
+\end{enumerate}
+
+
+\section{Objectives}\label{sec:objectives}
+To complete our ultimate goal of building the causal graph, we define the following objectives: We want to develop a system that automatically extracts the knowledge from online resources and outputs its causal graph.
+Additionally, we want to measure our procedure’s performance, evaluate our graph’s quality, and answer the above research questions.
+
+
+\section{Solution}\label{sec:solution}
+The first step is to gather textual data from domain experts.
+We decided to use three different information resources of the ArduPilot community: the online documentation\footnote{\url{https://ardupilot.org/ardupilot/}}, discussion forum\footnote{\url{https://discuss.ardupilot.org/}}, and Discord channel \footnote{\url{https://discord.com/channels/674039678562861068/674039678982422579}}.
+We utilize state-of-the-art web scraping to achieve that.
+Then, we use sentence segmentation to extract all the sentences that users and developers stated.
+To deal with \qq{dirty} sentences, we utilize regular expressions to clean them and apply grammar rules to filter incomplete sentences.
+Next, we extract \ac{CEP}s with the following three steps: 1) We pass the sentence to a pre-trained \ac{NLP} model, which adds linguistic features and tokenizes the sentence.
+2) We utilize dependency patterns using Semgrex operators on a dependency tree to identify the root of the cause and effect.
+3) We extend each root to one or multiple phrases by following the sentence's dependency relations between the tokens.
+Afterward, we build a synonym dictionary to unify \ac{CEP}s with the same meaning to ensure conciseness.
+Now, we can assemble the resulting \ac{CEP}s into a holistic \ac{WDCG} that can identify different root causes of events.
+Lastly, we define several quality measurements that evaluate the graph’s performance.
+
+
+\section{Contributions}\label{sec:contributions}
+During this thesis, we contributed the following to \ac{UAV} research:
+\begin{itemize}
+    \item The methodology to build an automized pipeline that outputs an extensive causal graph from various resources.
+    \item An extracted, processed, and sanitized knowledge base from the community for further research with over 724.922 sentences.
+    \item A phrase extraction algorithm is ably extracting multiple atomic \ac{CEP}s from one explicit causal mention.
+    \item The \ac{APD} consists of 69 labeled sentences that can have multiple causes and effects.
+\end{itemize}
+
+
+\section{Summary Of Results}\label{sec:results}
+During the development of our system, we were able to gain different insights about \ac{UAV} systems from the ArduPilot community and our resulting causal graph.
+For one, we learned that only a few causal relationships we found are reflected in the historical data.
+However, those we found in the flight logs dataset are mostly correct.
+Therefore, we assume that the lack of coverage is not due to incorrectness but to the limitations of the historical data set.
+On the contrary, it underlines the wealth of knowledge found in online sources.
+Another insight we gained is that the reported \ac{CEP}s are highly diverse, i.e., that most people reported different \ac{CEP}s.
+Furthermore, we showed consistency in our relations, as we barely found contradictions.
+Due to the nature of the informal natural language used in forums and chats, the data was noisy.
+For instance, users referring to a previous post with \qq{this},\qq{that}, or \qq{it} lead to useless \ac{CEP}s such as \qq{this causes that}.
+Thus, we filtered such pairs to ensure meaningfulness in our graph.
+Overall, we built a system that scraped 724.922 sentences, extracted 3301 \ac{CEP}s, and constructed an extensive \ac{WDCG}.
+Our \ac{CEP} extraction algorithm achieved a performance of \qq{0.632} precision at a recall of \qq{0.662} with the resulting f1-score of \qq{0.647} on \ac{APD}.
+Furthermore, we achieved a precision of \qq{0.9655} at a recall at \qq{0.6437} and \qq{0.7724} f1 score at \ac{NATO-SFA}, which is comparable with similar approaches.
+
+
+\section{Outline}\label{sec:outline}
+This thesis will guide one through implementing a pipeline for causal graph construction.
+In \autoref{ch:related-work}, the Related Work, we analyze the existing approaches for web scraping, \ac{CEP} extraction, and graph building.
+Based on that, we choose those appropriate for our use case.
+Next, in \autoref{ch:pipeline-overview}, the Pipeline Overview, we show the big picture of the necessary steps to generate a causal graph automatically.
+The first pipeline module is the Data Collection Module (see chapter \autoref{ch:data-collection}), where we analyze the different sources and adapt our web scraping approaches accordingly.
+Next, in \autoref{ch:cause-effect-extraction}, the Cause-Effect-Extraction module, we present the patterns and rules to extract \ac{CEP}s.
+In \autoref{ch:causal-graph}, the Causal Graph module, we demonstrate how we unify the \ac{CEP}s.
+We also provide a methodology to map the flight logs dataset into a \ac{WDCG} .
+In the last pipeline module, the Evaluation (see \autoref{ch:evaluation-methods}), we formalize our performance measurement of the \ac{CEP} extraction algorithm.
+This chapter also provides the formulas we used to evaluate the \ac{WDCG} .
+Then, in \autoref{ch:results}, the Results, we showcase our results and the knowledge we gained from the causal graph.
+Finally, in the last \autoref{ch:conclusions}, the Conclusion, we wrap up the thesis, show the limitations of our approach, and suggest future work possibilities.
